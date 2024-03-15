@@ -64,6 +64,7 @@ fun Screen2(
     val capturedPhotoUri = remember { mutableStateOf<Uri?>(null) }
     var label by remember { mutableStateOf("") }
     var text by remember { mutableStateOf("") }
+    var location by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -123,22 +124,21 @@ fun Screen2(
             onValueChange = {text = it},
             modifier = Modifier
                 .width(350.dp)
-                .padding(top = 20.dp)
+                .padding(vertical = 20.dp)
+        )
+        EditField(
+            label = R.string.location,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            visualTransformation = VisualTransformation.None,
+            value = location,
+            onValueChange = {location = it},
+            modifier = Modifier
+                .width(350.dp)
         )
         SpaceBetween()
-        Box(
-            modifier = Modifier
-                .height(100.dp)
-                .width(350.dp)
-                .padding(bottom = 45.dp)
-                .fillMaxSize()
-                .background(color = colorResource(id = R.color.black))
-                .clickable {
-
-                }
-        ){
-            Text(text = "Выбрать расположение", color = Color.White)
-        }
         ButtonWithBackground(text = "", onClick = { /*TODO*/ })
         Spacer(modifier = Modifier.height(100.dp))
     }
