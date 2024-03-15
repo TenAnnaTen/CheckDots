@@ -134,7 +134,7 @@ fun Screen2(
                 .fillMaxSize()
                 .background(color = colorResource(id = R.color.black))
                 .clickable {
-                    startActivity(context, Intent(context, activity_geo::class.java), null)
+
                 }
         ){
             Text(text = "Выбрать расположение", color = Color.White)
@@ -149,6 +149,7 @@ fun Screen2(
 
 @Composable
 fun Screen3() {
+    ListWithDots()
 }
 
 @Preview(showBackground = true)
