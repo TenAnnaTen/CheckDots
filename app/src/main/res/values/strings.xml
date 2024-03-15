@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CheckDots</string>
+    <string name="title_activity_reg">RegActivity</string>
+    <string name="dscr">Main Logo</string>
+    <string name="LogIn">Войти</string>
+    <string name="LogOut">Зарегистрироваться</string>
+    <string name="name">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="label_dots">Заголовок</string>
+    <string name="text_dots">Описание</string>
+</resources>

@@ -1,0 +1,164 @@
+package com.example.checkdots.MainList.NavScreen
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
+import coil.compose.rememberImagePainter
+import com.example.checkdots.MainList.Camera.CameraScreen
+import com.example.checkdots.MainList.Camera.shouldShowCamera
+import com.example.checkdots.MainList.DotsList.ListWithDots
+import com.example.checkdots.MainList.NavScreen.DataHolder.cameraExecutor
+import com.example.checkdots.MainList.NavScreen.DataHolder.outputDirectory
+import com.example.checkdots.R
+import com.example.checkdots.Reg.NavScreenReg.ButtonWithBackground
+import com.example.checkdots.Reg.NavScreenReg.EditField
+import com.example.checkdots.ui.theme.CheckDotsTheme
+import com.yandex.mapkit.MapKitFactory
+import com.yandex.mapkit.mapview.MapView
+import java.io.File
+import java.util.concurrent.ExecutorService
+
+@Composable
+fun ScreenMainList() {
+    ListWithDots()
+}
+
+@Composable
+fun Screen2(
+    outputDirectory: File,
+    executor: ExecutorService,
+    context: Context
+) {
+    val capturedPhotoUri = remember { mutableStateOf<Uri?>(null) }
+    var label by remember { mutableStateOf("") }
+    var text by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(25.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Box(
+            modifier = Modifier
+                .size(350.dp)
+                .background(color = colorResource(id = R.color.black))
+                .clickable {
+                    shouldShowCamera.value = true
+                },
+        ) {
+            if (shouldShowCamera.value) {
+                CameraScreen(
+                    outputDirectory = outputDirectory,
+                    executor = executor,
+                    onImageCaptured = { uri ->
+                        capturedPhotoUri.value = uri
+                        shouldShowCamera.value = false
+                    },
+                    onError = { Log.e("MyTag", "View error:", it) }
+                )
+            }else if (capturedPhotoUri.value != null) {
+                Image(
+                    painter = rememberImagePainter(capturedPhotoUri.value),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+        SpaceBetween()
+        EditField(
+            label = R.string.label_dots,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            visualTransformation = VisualTransformation.None,
+            value = label,
+            onValueChange = {label = it},
+            modifier = Modifier
+                .width(350.dp)
+        )
+        EditField(
+            label = R.string.text_dots,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Next
+            ),
+            visualTransformation = VisualTransformation.None,
+            value = text,
+            onValueChange = {text = it},
+            modifier = Modifier
+                .width(350.dp)
+                .padding(top = 20.dp)
+        )
+        SpaceBetween()
+        Box(
+            modifier = Modifier
+                .height(100.dp)
+                .width(350.dp)
+                .padding(bottom = 45.dp)
+                .fillMaxSize()
+                .background(color = colorResource(id = R.color.black))
+                .clickable {
+                    startActivity(context, Intent(context, activity_geo::class.java), null)
+                }
+        ){
+            Text(text = "Выбрать расположение", color = Color.White)
+        }
+        ButtonWithBackground(text = "", onClick = { /*TODO*/ })
+        Spacer(modifier = Modifier.height(100.dp))
+    }
+
+}
+
+
+
+@Composable
+fun Screen3() {
+}
+
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    CheckDotsTheme {
+    }
+}
+
+@Composable
+private fun SpaceBetween(){
+    Spacer(modifier = Modifier.height(50.dp))
+}
