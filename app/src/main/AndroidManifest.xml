@@ -20,18 +20,8 @@
         android:theme="@style/Theme.CheckDots"
         tools:targetApi="31">
         <activity
-            android:name=".MainList.NavScreen.activity_geo"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light"/>
-        <activity
-            android:name=".MainList.MainActivity"
-            android:exported="false"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.CheckDots" />
-        <activity
-            android:name=".Reg.RegActivity"
+            android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/title_activity_reg"
             android:theme="@style/Theme.CheckDots">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

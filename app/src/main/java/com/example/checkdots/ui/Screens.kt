@@ -1,7 +1,5 @@
-package com.example.checkdots.MainList.NavScreen
+package com.example.checkdots.ui
 
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -19,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -35,20 +31,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
-import com.example.checkdots.MainList.Camera.CameraScreen
-import com.example.checkdots.MainList.Camera.shouldShowCamera
-import com.example.checkdots.MainList.DotsList.ListWithDots
-import com.example.checkdots.MainList.NavScreen.DataHolder.cameraExecutor
-import com.example.checkdots.MainList.NavScreen.DataHolder.outputDirectory
+import com.example.checkdots.ui.camera.CameraScreen
+import com.example.checkdots.ui.camera.shouldShowCamera
+import com.example.checkdots.ui.views.ListWithDots
 import com.example.checkdots.R
-import com.example.checkdots.Reg.NavScreenReg.ButtonWithBackground
-import com.example.checkdots.Reg.NavScreenReg.EditField
+import com.example.checkdots.ui.navigation.ScreenRoute
 import com.example.checkdots.ui.theme.CheckDotsTheme
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.mapview.MapView
+import com.example.checkdots.ui.views.ButtonWithBackground
+import com.example.checkdots.ui.views.EditField
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -62,7 +54,6 @@ fun Screen2(
     navController: NavHostController,
     outputDirectory: File,
     executor: ExecutorService,
-    context: Context
 ) {
     val capturedPhotoUri = remember { mutableStateOf<Uri?>(null) }
     var label by remember { mutableStateOf("") }

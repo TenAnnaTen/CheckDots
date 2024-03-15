@@ -1,4 +1,4 @@
-package com.example.checkdots.MainList.Camera
+package com.example.checkdots.ui.camera
 
 import android.content.Context
 import android.net.Uri
@@ -36,12 +36,11 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 
-internal var shouldShowCamera: MutableState<Boolean> = mutableStateOf(false)
+var shouldShowCamera: MutableState<Boolean> = mutableStateOf(false)
 
 @Composable
 fun CameraScreen(

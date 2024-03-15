@@ -1,23 +1,20 @@
-package com.example.checkdots.MainList.NavScreen
+package com.example.checkdots.ui.navigation
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.util.Log
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.checkdots.MainList.BottomNavigation.BottomNavigation
-import com.example.checkdots.Reg.NavScreenReg.ScreenAut
-import com.example.checkdots.Reg.NavScreenReg.ScreenMainReg
-import com.example.checkdots.Reg.NavScreenReg.ScreenReg
+import com.example.checkdots.ui.Screen2
+import com.example.checkdots.ui.Screen3
+import com.example.checkdots.ui.ScreenMainList
+import com.example.checkdots.ui.account.authorization.AuthorizationScreen
+import com.example.checkdots.ui.account.authorization.AuthorizationViewModel
+import com.example.checkdots.ui.account.registration.RegistrationScreen
+import com.example.checkdots.ui.account.registration.RegistrationViewModel
+import com.example.checkdots.ui.account.welcome.WelcomeScreen
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -27,12 +24,13 @@ fun MainNavigationScreen(
     navController: NavHostController,
     outputDirectory: File,
     cameraExecutor: ExecutorService,
-    lifecycleScope: LifecycleCoroutineScope,
-    context: Context
 ) {
 
     val backStackEntry = navController.currentBackStackEntryAsState()
     val currentRoute = backStackEntry.value?.destination?.route
+
+    val registrationViewModel = RegistrationViewModel(navController = navController)
+    val authorizationViewModel = AuthorizationViewModel(navController = navController)
 
     Scaffold(bottomBar = {
         if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
@@ -50,7 +48,6 @@ fun MainNavigationScreen(
                     navController = navController,
                     outputDirectory = outputDirectory,
                     executor = cameraExecutor,
-                    context = context
                 )
             }
 
@@ -58,13 +55,13 @@ fun MainNavigationScreen(
                 Screen3()
             }
             composable(ScreenRoute.SCREENREGAUT.name) {
-                ScreenMainReg(navController)
+                WelcomeScreen(navController)
             }
             composable(ScreenRoute.REGISTRATION.name) {
-                ScreenReg(navController, lifecycleScope = lifecycleScope, context = context)
+                RegistrationScreen(viewModel = registrationViewModel)
             }
             composable(ScreenRoute.AUTHORIZATION.name) {
-                ScreenAut(navController)
+                AuthorizationScreen(viewModel = authorizationViewModel)
             }
         }
     }

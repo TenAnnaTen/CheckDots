@@ -1,6 +1,5 @@
-package com.example.checkdots.MainList.BottomNavigation
+package com.example.checkdots.ui.navigation
 
-import com.example.checkdots.MainList.NavScreen.ScreenRoute
 import com.example.checkdots.R
 
 sealed class BottomNavigationItem(

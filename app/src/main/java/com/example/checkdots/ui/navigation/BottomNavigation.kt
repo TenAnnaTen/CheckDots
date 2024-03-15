@@ -1,4 +1,4 @@
-package com.example.checkdots.MainList.BottomNavigation
+package com.example.checkdots.ui.navigation
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -46,7 +46,6 @@ fun BottomNavigation(
                 colors = NavigationBarItemDefaults.colors(
                     unselectedIconColor = colorResource(id = R.color.black),
                     indicatorColor = colorResource(id = R.color.white)
-
                 ),
             )
         }

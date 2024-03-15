@@ -1,4 +1,4 @@
-package com.example.checkdots.MainList.DotsList
+package com.example.checkdots.ui.views
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,9 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.checkdots.data.model.Dots
 
 @Composable
-fun DotsListItem(dots: Dots) {
+fun DotsItem(dots: Dots) {
     Card (
         modifier = Modifier
             .padding(10.dp)

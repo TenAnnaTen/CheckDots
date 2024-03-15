@@ -1,9 +1,8 @@
-package com.example.checkdots.MainList
+package com.example.checkdots
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -12,23 +11,19 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
-import com.example.checkdots.MainList.Camera.shouldShowCamera
-import com.example.checkdots.MainList.NavScreen.DataHolder
-import com.example.checkdots.MainList.NavScreen.MainNavigationScreen
-import com.example.checkdots.R
-import com.example.checkdots.Reg.RegActivity
+import com.example.checkdots.ui.camera.shouldShowCamera
+import com.example.checkdots.utils.DataHolder
+import com.example.checkdots.ui.navigation.MainNavigationScreen
 import com.example.checkdots.ui.theme.CheckDotsTheme
-import com.yandex.mapkit.MapKitFactory
 import java.io.File
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class MainActivity : ComponentActivity() {
 
-    internal lateinit var outputDirectory: File
-    internal lateinit var cameraExecutor: ExecutorService
+    private lateinit var outputDirectory: File
+    private lateinit var cameraExecutor: ExecutorService
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -39,9 +34,7 @@ class MainActivity : ComponentActivity() {
         } else {
             Log.i("MyTag", "Permission denied")
         }
-
     }
-
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +47,6 @@ class MainActivity : ComponentActivity() {
         DataHolder.cameraExecutor = cameraExecutor
         DataHolder.shouldShowCamera = shouldShowCamera
 
-
-
         setContent {
             val navController = rememberNavController()
             CheckDotsTheme {
@@ -63,14 +54,11 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     outputDirectory = outputDirectory,
                     cameraExecutor = cameraExecutor,
-                    lifecycleScope = lifecycleScope,
-                    context = this
                 )
             }
         }
 
         requestCameraPermission()
-
     }
 
     private fun requestCameraPermission() {
@@ -114,5 +102,4 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
         cameraExecutor.shutdown()
     }
-
 }

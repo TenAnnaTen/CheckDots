@@ -1,4 +1,4 @@
-package com.example.checkdots.MainList.DotsList
+package com.example.checkdots.data.model
 
 data class Dots(
     val id: Int,

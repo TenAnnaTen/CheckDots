@@ -1,4 +1,4 @@
-package com.example.checkdots.MainList.NavScreen
+package com.example.checkdots.ui.navigation
 
 enum class ScreenRoute {
     SCREENMAINLIST, SCREEN2, SCREEN3, SCREENREGAUT, REGISTRATION, AUTHORIZATION
