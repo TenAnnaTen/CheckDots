@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.checkdots.MainList.Camera.shouldShowCamera
 import com.example.checkdots.MainList.NavScreen.MainNavigationScreen
@@ -33,6 +34,7 @@ class RegActivity : ComponentActivity() {
                     navController = navController,
                     outputDirectory = outputDirectory,
                     cameraExecutor = cameraExecutor,
+                    lifecycleScope = lifecycleScope,
                     context = this
                 )
             }

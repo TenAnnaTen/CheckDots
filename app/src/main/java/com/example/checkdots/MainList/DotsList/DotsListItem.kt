@@ -30,7 +30,7 @@ fun DotsListItem(dots: Dots) {
                     .align(Alignment.CenterVertically)
             ) {
                 Text(text = dots.title, style = typography.headlineLarge)
-                Text(text = "VIEW DETAIL", style = typography.bodyMedium)
+                Text(text = dots.description, style = typography.bodyMedium)
             }
         }
     }

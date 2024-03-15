@@ -29,12 +29,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.example.checkdots.MainList.Camera.CameraScreen
 import com.example.checkdots.MainList.Camera.shouldShowCamera
@@ -57,6 +59,7 @@ fun ScreenMainList() {
 
 @Composable
 fun Screen2(
+    navController: NavHostController,
     outputDirectory: File,
     executor: ExecutorService,
     context: Context
@@ -139,10 +142,12 @@ fun Screen2(
                 .width(350.dp)
         )
         SpaceBetween()
-        ButtonWithBackground(text = "", onClick = { /*TODO*/ })
+        ButtonWithBackground(
+            text = stringResource(id = R.string.btn_save),
+            onClick = { navController.navigate(ScreenRoute.SCREENMAINLIST.name) }
+        )
         Spacer(modifier = Modifier.height(100.dp))
     }
-
 }
 
 

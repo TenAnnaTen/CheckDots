@@ -9,6 +9,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +27,7 @@ fun MainNavigationScreen(
     navController: NavHostController,
     outputDirectory: File,
     cameraExecutor: ExecutorService,
+    lifecycleScope: LifecycleCoroutineScope,
     context: Context
 ) {
 
@@ -45,6 +47,7 @@ fun MainNavigationScreen(
             }
             composable(ScreenRoute.SCREEN2.name) {
                 Screen2(
+                    navController = navController,
                     outputDirectory = outputDirectory,
                     executor = cameraExecutor,
                     context = context
@@ -58,7 +61,7 @@ fun MainNavigationScreen(
                 ScreenMainReg(navController)
             }
             composable(ScreenRoute.REGISTRATION.name) {
-                ScreenReg(navController)
+                ScreenReg(navController, lifecycleScope = lifecycleScope, context = context)
             }
             composable(ScreenRoute.AUTHORIZATION.name) {
                 ScreenAut(navController)

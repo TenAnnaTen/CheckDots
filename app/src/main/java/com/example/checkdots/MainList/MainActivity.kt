@@ -12,6 +12,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.checkdots.MainList.Camera.shouldShowCamera
 import com.example.checkdots.MainList.NavScreen.DataHolder
@@ -62,6 +63,7 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     outputDirectory = outputDirectory,
                     cameraExecutor = cameraExecutor,
+                    lifecycleScope = lifecycleScope,
                     context = this
                 )
             }

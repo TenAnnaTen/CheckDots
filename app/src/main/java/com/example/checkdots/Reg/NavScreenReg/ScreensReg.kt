@@ -1,6 +1,7 @@
 package com.example.checkdots.Reg.NavScreenReg
 
-import androidx.annotation.DrawableRes
+import android.content.Context
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,10 +37,16 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.checkdots.MainList.NavScreen.ScreenRoute
 import com.example.checkdots.R
+import com.example.checkdots.Reg.RegistrationRequest
+import com.example.checkdots.Reg.RetrofitInstance
 import com.example.checkdots.ui.theme.CheckDotsTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun ScreenMainReg(
@@ -80,7 +86,6 @@ internal fun ButtonWithBackground(
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
-
             .background(colorResource(id = R.color.main_yellow), RoundedCornerShape(10.dp)),
         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.main_yellow))
     ) {
@@ -95,7 +100,9 @@ internal fun ButtonWithBackground(
 @Composable
 fun ScreenReg(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    lifecycleScope: LifecycleCoroutineScope,
+    context: Context
 ) {
     var inputName by remember { mutableStateOf("") }
     var inputPassword by remember { mutableStateOf("") }
@@ -129,7 +136,9 @@ fun ScreenReg(
         )
         ButtonWithBackground(
             text = stringResource(id = R.string.LogOut),
-            onClick = { navController.navigate(ScreenRoute.SCREENMAINLIST.name) },
+            onClick = {
+                performRegistration(navController, lifecycleScope, inputName, inputPassword, context )
+            },
             modifier = Modifier.padding(23.dp)
         )
     }
@@ -155,6 +164,27 @@ internal fun EditField(
         keyboardOptions = keyboardOptions,
         modifier = modifier
     )
+}
+
+private fun performRegistration(
+    navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope,
+    username: String,
+    password: String,
+    context: Context
+) {
+    lifecycleScope.launch {
+        try {
+            val response = RetrofitInstance.apiService.register(RegistrationRequest(username, password))
+            if (response.isSuccessful) {
+                navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+            } else {
+                Toast.makeText(context, "Ошибка регистрации", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(context, "Ошибка сети", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
 
 @Composable
@@ -204,6 +234,7 @@ fun ScreenAut(
 @Composable
 fun GreetingPreview2() {
     CheckDotsTheme {
-
+        val navController = rememberNavController()
+        ScreenAut(navController = navController)
     }
 }

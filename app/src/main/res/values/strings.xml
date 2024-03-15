@@ -9,4 +9,5 @@
     <string name="label_dots">Заголовок</string>
     <string name="text_dots">Описание</string>
     <string name="location">Адрес метки</string>
+    <string name="btn_save">Сохранить</string>
 </resources>
