@@ -21,13 +21,13 @@ class RegistrationViewModel(
     private val accountRepository = AccountRepository()
 
     fun registerUser(user: User) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Main) {
             try {
                 val response = accountRepository.registerUser(user)
                 if (response.isSuccessful) {
                     navController.navigate(ScreenRoute.SCREENMAINLIST.name)
                 } else {
-                    _sharedFlow.emit("Ошибка регистрации")
+                    _sharedFlow.emit("Введите другое имя")
                 }
             } catch (e: Exception) {
                 _sharedFlow.emit("Ошибка сети")

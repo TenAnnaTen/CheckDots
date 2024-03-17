@@ -8,9 +8,9 @@ import retrofit2.http.POST
 
 interface AccountService {
 
-    @POST("register")
+    @POST("user/create")
     suspend fun registerUser(@Body request: User): Response<ServerResponse>
 
-    @POST("login")
+    @POST("user/check")
     suspend fun authUser(@Body request: User): Response<ServerResponse>
 }
