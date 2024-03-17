@@ -27,6 +27,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.checkdots.R
 import com.example.checkdots.data.model.User
+import com.example.checkdots.ui.account.authorization.id
+import com.example.checkdots.ui.account.authorization.saveUserId
 import com.example.checkdots.ui.views.ButtonWithBackground
 import com.example.checkdots.ui.views.EditField
 import kotlinx.coroutines.flow.collectLatest
@@ -87,6 +89,7 @@ fun RegistrationScreen(
                         password = inputPassword
                     )
                 )
+                saveUserId(id.toString(), context)
             },
             modifier = Modifier.padding(23.dp)
         )

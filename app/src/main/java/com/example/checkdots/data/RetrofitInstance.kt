@@ -1,8 +1,10 @@
 package com.example.checkdots.data
 
 import com.example.checkdots.data.service.AccountService
+import com.example.checkdots.data.service.DotsService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 
 object RetrofitInstance {
 
@@ -17,5 +19,8 @@ object RetrofitInstance {
 
     val accountService: AccountService by lazy {
         retrofit.create(AccountService::class.java)
+    }
+    val dotsService: DotsService by lazy {
+        retrofit.create(DotsService::class.java)
     }
 }

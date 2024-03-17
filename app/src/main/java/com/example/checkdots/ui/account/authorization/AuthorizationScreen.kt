@@ -91,10 +91,18 @@ fun AuthorizationScreen(
                         password = inputPassword
                     )
                 )
+                saveUserId(id.toString(), context)
             },
             modifier = Modifier.padding(23.dp),
         )
     }
+}
+
+fun saveUserId(userId: String, context: Context) {
+    val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+    val editor = sharedPreferences.edit()
+    editor.putString("user_id", userId)
+    editor.apply()
 }
 
 @Preview(showBackground = true)

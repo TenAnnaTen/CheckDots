@@ -135,7 +135,10 @@ fun Screen2(
         SpaceBetween()
         ButtonWithBackground(
             text = stringResource(id = R.string.btn_save),
-            onClick = { navController.navigate(ScreenRoute.SCREENMAINLIST.name) }
+            onClick = {
+
+                navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+            }
         )
         Spacer(modifier = Modifier.height(100.dp))
     }
