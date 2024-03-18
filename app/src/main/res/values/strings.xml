@@ -10,4 +10,5 @@
     <string name="text_dots">Описание</string>
     <string name="location">Адрес метки</string>
     <string name="btn_save">Сохранить</string>
+    <string name="error_regex">г. Город, ул. Улица (пер. Переулок, пр. Проспект), д. Ближайший номер дома</string>
 </resources>

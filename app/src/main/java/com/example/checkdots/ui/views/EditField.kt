@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EditField(
     @StringRes label: Int,
+    @StringRes placeholder: Int?,
     keyboardOptions: KeyboardOptions,
     visualTransformation: VisualTransformation,
     value: String,
@@ -26,6 +27,9 @@ fun EditField(
     TextField(
         value = value,
         onValueChange = onValueChange,
+        placeholder = {
+            if(placeholder != null) Text(stringResource(placeholder))
+                      },
         label = { Text(stringResource(label)) },
         visualTransformation =  visualTransformation,
         singleLine = true,

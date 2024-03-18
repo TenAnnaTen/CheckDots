@@ -8,7 +8,7 @@ import retrofit2.create
 
 object RetrofitInstance {
 
-    private const val BASE_URL = "http://192.168.55.68:8080/api/v1/"
+    private const val BASE_URL = "http://192.168.1.46:8080/api/v1/"
 
     private val retrofit by lazy {
         Retrofit.Builder()

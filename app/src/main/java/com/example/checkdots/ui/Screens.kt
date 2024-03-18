@@ -49,13 +49,15 @@ import com.example.checkdots.ui.navigation.ScreenRoute
 import com.example.checkdots.ui.theme.CheckDotsTheme
 import com.example.checkdots.ui.views.ButtonWithBackground
 import com.example.checkdots.ui.views.EditField
+import com.example.checkdots.utils.Regexp
 import kotlinx.coroutines.flow.collectLatest
 import java.io.File
 import java.util.concurrent.ExecutorService
 
 @Composable
-fun ScreenMainList() {
-    ListWithDots()
+fun ScreenMainList(viewModel: DotsViewModel) {
+    ListWithDots(dotsList = viewModel.dotsListResponse)
+    viewModel.getDotsList()
 }
 
 @Composable
@@ -86,35 +88,36 @@ fun Screen2(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Box(
-            modifier = Modifier
-                .size(350.dp)
-                .background(color = colorResource(id = R.color.black))
-                .clickable {
-                    shouldShowCamera.value = true
-                },
-        ) {
-            if (shouldShowCamera.value) {
-                CameraScreen(
-                    outputDirectory = outputDirectory,
-                    executor = executor,
-                    onImageCaptured = { uri ->
-                        capturedPhotoUri.value = uri
-                        shouldShowCamera.value = false
-                    },
-                    onError = { Log.e("MyTag", "View error:", it) }
-                )
-            }else if (capturedPhotoUri.value != null) {
-                Image(
-                    painter = rememberImagePainter(capturedPhotoUri.value),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
+//        Box(
+//            modifier = Modifier
+//                .size(350.dp)
+//                .background(color = colorResource(id = R.color.black))
+//                .clickable {
+//                    shouldShowCamera.value = true
+//                },
+//        ) {
+//            if (shouldShowCamera.value) {
+//                CameraScreen(
+//                    outputDirectory = outputDirectory,
+//                    executor = executor,
+//                    onImageCaptured = { uri ->
+//                        capturedPhotoUri.value = uri
+//                        shouldShowCamera.value = false
+//                    },
+//                    onError = { Log.e("MyTag", "View error:", it) }
+//                )
+//            }else if (capturedPhotoUri.value != null) {
+//                Image(
+//                    painter = rememberImagePainter(capturedPhotoUri.value),
+//                    contentDescription = null,
+//                    modifier = Modifier.fillMaxSize()
+//                )
+//            }
+//        }
         SpaceBetween()
         EditField(
             label = R.string.label_dots,
+            placeholder = null,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -127,6 +130,7 @@ fun Screen2(
         )
         EditField(
             label = R.string.text_dots,
+            placeholder = null,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -140,6 +144,7 @@ fun Screen2(
         )
         EditField(
             label = R.string.location,
+            placeholder = R.string.error_regex,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Next
@@ -154,15 +159,18 @@ fun Screen2(
         ButtonWithBackground(
             text = stringResource(id = R.string.btn_save),
             onClick = {
-                viewModel.addDots(
-                    Dots(
-                        heading = label,
-                        description = text,
-                        address = location,
-                        path_image = ""
+                if (Regexp(location)){
+                    viewModel.addDots(
+                        Dots(
+                            heading = label,
+                            description = text,
+                            address = location,
+                            path_image = ""
+                        )
                     )
-                )
-                navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+                    navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+                } else Toast.makeText(context, "Местоположение введено неверно", Toast.LENGTH_SHORT).show()
+
             }
         )
         Spacer(modifier = Modifier.height(100.dp))
@@ -173,7 +181,7 @@ fun Screen2(
 
 @Composable
 fun Screen3() {
-    ListWithDots()
+//    ListWithDots()
 }
 
 @Preview(showBackground = true)

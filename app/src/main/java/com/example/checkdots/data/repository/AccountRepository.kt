@@ -1,9 +1,7 @@
 package com.example.checkdots.data.repository
 
 import com.example.checkdots.data.RetrofitInstance
-import com.example.checkdots.data.model.Dots
 import com.example.checkdots.data.model.ServerResponse
-import com.example.checkdots.data.model.ServerResponseDots
 import com.example.checkdots.data.model.User
 import retrofit2.Response
 

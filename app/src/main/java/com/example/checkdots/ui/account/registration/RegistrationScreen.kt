@@ -60,6 +60,7 @@ fun RegistrationScreen(
         Image(painter = painterResource(id = R.drawable.logo), contentDescription = null)
         EditField(
             label = R.string.name,
+            placeholder = null,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Done
@@ -70,6 +71,7 @@ fun RegistrationScreen(
         )
         EditField(
             label = R.string.password,
+            placeholder = null,
             keyboardOptions = KeyboardOptions.Default.copy(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done

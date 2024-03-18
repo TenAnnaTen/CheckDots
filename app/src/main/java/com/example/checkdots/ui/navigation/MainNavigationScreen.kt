@@ -43,7 +43,7 @@ fun MainNavigationScreen(
     }) {
         NavHost(navController = navController, startDestination = ScreenRoute.SCREENREGAUT.name) {
             composable(ScreenRoute.SCREENMAINLIST.name) {
-                ScreenMainList()
+                ScreenMainList(viewModel = dotsViewModel)
             }
             composable(ScreenRoute.SCREEN2.name) {
                 Screen2(
