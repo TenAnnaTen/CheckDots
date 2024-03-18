@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.checkdots.R
 import com.example.checkdots.data.model.Dots
 
 @Composable
@@ -30,7 +31,7 @@ fun DotsItem(dots: Dots) {
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically)
             ) {
-                Text(text = dots.title, style = typography.headlineLarge)
+                Text(text = dots.heading, style = typography.headlineLarge)
                 Text(text = dots.description, style = typography.bodyMedium)
             }
         }
@@ -40,7 +41,7 @@ fun DotsItem(dots: Dots) {
 @Composable
 private fun DotsImage(dots: Dots){
     Image(
-        painter = painterResource(id = dots.dotsImageId),
+        painter = painterResource(id = R.drawable.logo),
         contentDescription = null,
         modifier = Modifier
             .padding(8.dp)

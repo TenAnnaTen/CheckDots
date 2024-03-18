@@ -1,6 +1,5 @@
 package com.example.checkdots.ui.account.welcome
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,13 +8,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.checkdots.ui.navigation.ScreenRoute
 import com.example.checkdots.R
+import com.example.checkdots.data.storage.AccountStorage
+import com.example.checkdots.ui.navigation.ScreenRoute
 import com.example.checkdots.ui.views.ButtonWithBackground
 
 @Composable
@@ -23,13 +22,14 @@ fun WelcomeScreen(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val accountStorage = AccountStorage()
 
-    val context = LocalContext.current
+    val userId = accountStorage.getUserId()
 
-    if(isUserLoggedIn(context)){
+    if (userId != 0) {
         navController.navigate(ScreenRoute.SCREENMAINLIST.name)
-    }else{
-        Column (
+    } else {
+        Column(
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -40,7 +40,7 @@ fun WelcomeScreen(
             )
             ButtonWithBackground(
                 text = stringResource(id = R.string.LogIn),
-                onClick = { navController.navigate(ScreenRoute.AUTHORIZATION.name)},
+                onClick = { navController.navigate(ScreenRoute.AUTHORIZATION.name) },
                 modifier = Modifier.padding(23.dp)
             )
             ButtonWithBackground(
@@ -50,14 +50,4 @@ fun WelcomeScreen(
             )
         }
     }
-}
-
-fun isUserLoggedIn(context: Context): Boolean {
-    val userId = getUserId(context)
-    return !userId.isNullOrEmpty()
-}
-
-fun getUserId(context: Context): String? {
-    val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    return sharedPreferences.getString("user_id", null)
 }

@@ -12,6 +12,7 @@ import com.example.checkdots.ui.Screen3
 import com.example.checkdots.ui.ScreenMainList
 import com.example.checkdots.ui.account.authorization.AuthorizationScreen
 import com.example.checkdots.ui.account.authorization.AuthorizationViewModel
+import com.example.checkdots.ui.account.dotsAdd.DotsViewModel
 import com.example.checkdots.ui.account.registration.RegistrationScreen
 import com.example.checkdots.ui.account.registration.RegistrationViewModel
 import com.example.checkdots.ui.account.welcome.WelcomeScreen
@@ -31,6 +32,7 @@ fun MainNavigationScreen(
 
     val registrationViewModel = RegistrationViewModel(navController = navController)
     val authorizationViewModel = AuthorizationViewModel(navController = navController)
+    val dotsViewModel = DotsViewModel(navController = navController)
 
     Scaffold(bottomBar = {
         if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
@@ -48,6 +50,7 @@ fun MainNavigationScreen(
                     navController = navController,
                     outputDirectory = outputDirectory,
                     executor = cameraExecutor,
+                    viewModel = dotsViewModel
                 )
             }
 

@@ -10,15 +10,15 @@ import com.example.checkdots.utils.DataProvider
 
 @Composable
 fun ListWithDots() {
-    val dots = remember { DataProvider.dotsList }
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-    ){
-        items(
-            items = dots,
-            itemContent = {
-                DotsItem(dots = it)
-            }
-        )
-    }
+//    val dots = remember { DataProvider.dotsList }
+//    LazyColumn(
+//        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+//    ){
+//        items(
+//            items = dots,
+//            itemContent = {
+//                DotsItem(dots = it)
+//            }
+//        )
+//    }
 }

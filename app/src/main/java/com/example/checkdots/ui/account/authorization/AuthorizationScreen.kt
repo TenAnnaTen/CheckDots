@@ -1,6 +1,5 @@
 package com.example.checkdots.ui.account.authorization
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.example.checkdots.R
 import com.example.checkdots.data.model.User
+import com.example.checkdots.data.storage.AccountStorage
 import com.example.checkdots.ui.theme.CheckDotsTheme
 import com.example.checkdots.ui.views.ButtonWithBackground
 import com.example.checkdots.ui.views.EditField
@@ -42,6 +43,8 @@ fun AuthorizationScreen(
 ) {
 
     val context = LocalContext.current
+
+    val state = viewModel.state.collectAsState()
 
     var inputName by remember { mutableStateOf("") }
     var inputPassword by remember { mutableStateOf("") }
@@ -91,18 +94,10 @@ fun AuthorizationScreen(
                         password = inputPassword
                     )
                 )
-                saveUserId(id.toString(), context)
             },
             modifier = Modifier.padding(23.dp),
         )
     }
-}
-
-fun saveUserId(userId: String, context: Context) {
-    val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-    val editor = sharedPreferences.edit()
-    editor.putString("user_id", userId)
-    editor.apply()
 }
 
 @Preview(showBackground = true)

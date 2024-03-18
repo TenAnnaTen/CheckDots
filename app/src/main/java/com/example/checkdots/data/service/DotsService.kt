@@ -7,10 +7,11 @@ import com.example.checkdots.data.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface DotsService {
 
-    @POST("claim/create")
-    suspend fun registerDots(@Body request: Dots): Response<ServerResponseDots>
+    @POST("claim/create/{id}")
+    suspend fun registerDots(@Body request: Dots, @Path("id") id: Int): Response<ServerResponseDots>
 
 }
