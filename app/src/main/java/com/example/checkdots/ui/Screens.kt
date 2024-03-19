@@ -3,21 +3,17 @@ package com.example.checkdots.ui
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,36 +23,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberImagePainter
-import com.example.checkdots.ui.camera.CameraScreen
-import com.example.checkdots.ui.camera.shouldShowCamera
-import com.example.checkdots.ui.views.ListWithDots
 import com.example.checkdots.R
 import com.example.checkdots.data.model.Dots
-import com.example.checkdots.data.model.User
-import com.example.checkdots.ui.account.authorization.AuthorizationViewModel
+import com.example.checkdots.data.storage.AccountStorage
 import com.example.checkdots.ui.account.dotsAdd.DotsViewModel
 import com.example.checkdots.ui.navigation.ScreenRoute
-import com.example.checkdots.ui.theme.CheckDotsTheme
 import com.example.checkdots.ui.views.ButtonWithBackground
 import com.example.checkdots.ui.views.EditField
+import com.example.checkdots.ui.views.ListWithDots
 import com.example.checkdots.utils.Regexp
 import kotlinx.coroutines.flow.collectLatest
 import java.io.File
 import java.util.concurrent.ExecutorService
 
 @Composable
-fun ScreenMainList(viewModel: DotsViewModel) {
-    ListWithDots(dotsList = viewModel.dotsListResponse)
+fun ScreenMainList(viewModel: DotsViewModel, navController: NavHostController) {
+    ListWithDots(dotsList = viewModel.dotsListResponse, navController)
     viewModel.getDotsList()
 }
 
@@ -68,6 +58,7 @@ fun Screen2(
     viewModel: DotsViewModel
 ) {
     val context = LocalContext.current
+    val accountStorage = AccountStorage()
 
     LaunchedEffect(key1 = Unit) {
         viewModel.sharedFlow.collectLatest {
@@ -162,6 +153,7 @@ fun Screen2(
                 if (Regexp(location)){
                     viewModel.addDots(
                         Dots(
+                            id = accountStorage.getDotsId(),
                             heading = label,
                             description = text,
                             address = location,
@@ -180,15 +172,35 @@ fun Screen2(
 
 
 @Composable
-fun Screen3() {
-//    ListWithDots()
+fun Screen3(viewModel: DotsViewModel, navController: NavHostController) {
+    ListWithDots(dotsList = viewModel.dotsListResponse, navController)
+    viewModel.getPlanetDotsList()
+}
+
+@Composable
+fun screenView(viewModel: DotsViewModel, navController: NavHostController){
+
+    val dotsId = navController.currentBackStackEntry?.arguments?.getString("dots_id")
+
+    viewModel.getDotsWithId(dotsId?.toInt() ?: 0)
+
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(25.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+//        Text(text = "Заголовок: ${dots.}", fontSize = 25.sp)
+//        SpaceBetween()
+//        Text(text = "Описание: ${}", fontSize = 25.sp)
+//        SpaceBetween()
+//        Text(text = "Местоположение: ${}", fontSize = 25.sp)
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    CheckDotsTheme {
-    }
+
 }
 
 @Composable

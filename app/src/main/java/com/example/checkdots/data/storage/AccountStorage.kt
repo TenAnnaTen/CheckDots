@@ -21,8 +21,20 @@ class AccountStorage: KoinComponent {
         editor.apply()
     }
 
+    fun saveDotsId(dotsId: Int) {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("dots_id", dotsId)
+        editor.apply()
+    }
+
     fun getUserId(): Int {
         val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("user_id", 0)
+    }
+
+    fun getDotsId(): Int {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getInt("dots_id", 0)
     }
 }

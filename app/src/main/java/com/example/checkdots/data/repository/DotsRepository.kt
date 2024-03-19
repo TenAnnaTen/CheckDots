@@ -16,8 +16,17 @@ class DotsRepository {
         return RetrofitInstance.dotsService.registerDots(dots, userId)
     }
 
-    suspend fun getDots(): List<Dots>{
+    suspend fun getDots(): List<Dots> {
         val userId = accountStorage.getUserId()
         return RetrofitInstance.dotsService.getDots(userId)
     }
+
+    suspend fun getPlanetDots(): List<Dots> {
+        return RetrofitInstance.dotsService.getPlanetDots()
+    }
+
+    suspend fun getDotWithId(dotsId: Int): Response<ServerResponseDots> {
+        return RetrofitInstance.dotsService.getDotsWithId(dotsId)
+    }
+
 }

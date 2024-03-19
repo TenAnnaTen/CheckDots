@@ -1,9 +1,12 @@
 package com.example.checkdots.ui.views
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,6 +26,7 @@ fun EditField(
     modifier: Modifier = Modifier
         .padding(15.dp)
         .width(350.dp)
+        .verticalScroll(rememberScrollState())
 ){
     TextField(
         value = value,
@@ -35,5 +39,6 @@ fun EditField(
         singleLine = true,
         keyboardOptions = keyboardOptions,
         modifier = modifier
+
     )
 }

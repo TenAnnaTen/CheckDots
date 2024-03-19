@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.checkdots.data.model.Dots
 import com.example.checkdots.ui.Screen2
 import com.example.checkdots.ui.Screen3
 import com.example.checkdots.ui.ScreenMainList
@@ -16,6 +17,7 @@ import com.example.checkdots.ui.account.dotsAdd.DotsViewModel
 import com.example.checkdots.ui.account.registration.RegistrationScreen
 import com.example.checkdots.ui.account.registration.RegistrationViewModel
 import com.example.checkdots.ui.account.welcome.WelcomeScreen
+import com.example.checkdots.ui.screenView
 import java.io.File
 import java.util.concurrent.ExecutorService
 
@@ -24,7 +26,7 @@ import java.util.concurrent.ExecutorService
 fun MainNavigationScreen(
     navController: NavHostController,
     outputDirectory: File,
-    cameraExecutor: ExecutorService,
+    cameraExecutor: ExecutorService
 ) {
 
     val backStackEntry = navController.currentBackStackEntryAsState()
@@ -34,16 +36,29 @@ fun MainNavigationScreen(
     val authorizationViewModel = AuthorizationViewModel(navController = navController)
     val dotsViewModel = DotsViewModel(navController = navController)
 
-    Scaffold(bottomBar = {
-        if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
-            currentRoute != ScreenRoute.REGISTRATION.name &&
-            currentRoute != ScreenRoute.AUTHORIZATION.name) {
-            BottomNavigation(navController = navController)
-        }
-    }) {
+    Scaffold(
+        topBar = {
+            if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
+                currentRoute != ScreenRoute.REGISTRATION.name &&
+                currentRoute != ScreenRoute.AUTHORIZATION.name &&
+                currentRoute != ScreenRoute.SCREENVIEW.name
+            ) {
+                TopNavigationMain(navController = navController)
+            } else if(currentRoute == ScreenRoute.SCREENVIEW.name) TopNavigationView(navController = navController)
+        },
+        bottomBar = {
+            if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
+                currentRoute != ScreenRoute.REGISTRATION.name &&
+                currentRoute != ScreenRoute.AUTHORIZATION.name
+            ) {
+                BottomNavigation(navController = navController)
+            }
+        }) {
         NavHost(navController = navController, startDestination = ScreenRoute.SCREENREGAUT.name) {
             composable(ScreenRoute.SCREENMAINLIST.name) {
-                ScreenMainList(viewModel = dotsViewModel)
+                ScreenMainList(
+                    viewModel = dotsViewModel,
+                    navController = navController)
             }
             composable(ScreenRoute.SCREEN2.name) {
                 Screen2(
@@ -55,7 +70,9 @@ fun MainNavigationScreen(
             }
 
             composable(ScreenRoute.SCREEN3.name) {
-                Screen3()
+                Screen3(
+                    viewModel = dotsViewModel,
+                    navController = navController)
             }
             composable(ScreenRoute.SCREENREGAUT.name) {
                 WelcomeScreen(navController)
@@ -66,6 +83,19 @@ fun MainNavigationScreen(
             composable(ScreenRoute.AUTHORIZATION.name) {
                 AuthorizationScreen(viewModel = authorizationViewModel)
             }
+            composable(ScreenRoute.SCREENVIEW.name) {
+                screenView(
+                    viewModel = dotsViewModel,
+                    navController = navController
+                    )
+            }
+            composable(ScreenRoute.SCREENVIEW.name + "/{dotsId}") { backStackEntry ->
+                screenView(
+                    viewModel = dotsViewModel,
+                    navController = navController
+                )
+            }
+
         }
     }
 }

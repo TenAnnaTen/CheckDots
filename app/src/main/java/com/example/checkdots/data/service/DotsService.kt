@@ -17,4 +17,10 @@ interface DotsService {
 
     @GET("claim/getall/{id}")
     suspend fun getDots(@Path("id") id: Int): List<Dots>
+
+    @GET("claim/getall")
+    suspend fun getPlanetDots(): List<Dots>
+
+    @GET("claim/get/{id}")
+    suspend fun getDotsWithId(@Path("id") id: Int): Response<ServerResponseDots>
 }
