@@ -17,6 +17,8 @@ import com.example.checkdots.ui.account.dotsAdd.DotsViewModel
 import com.example.checkdots.ui.account.registration.RegistrationScreen
 import com.example.checkdots.ui.account.registration.RegistrationViewModel
 import com.example.checkdots.ui.account.welcome.WelcomeScreen
+import com.example.checkdots.ui.refactoring
+import com.example.checkdots.ui.screenRefactoring
 import com.example.checkdots.ui.screenView
 import java.io.File
 import java.util.concurrent.ExecutorService
@@ -38,13 +40,11 @@ fun MainNavigationScreen(
 
     Scaffold(
         topBar = {
-            if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
-                currentRoute != ScreenRoute.REGISTRATION.name &&
-                currentRoute != ScreenRoute.AUTHORIZATION.name &&
-                currentRoute != ScreenRoute.SCREENVIEW.name
-            ) {
-                TopNavigationMain(navController = navController)
-            } else if(currentRoute == ScreenRoute.SCREENVIEW.name) TopNavigationView(navController = navController)
+            when (currentRoute) {
+                ScreenRoute.SCREENMAINLIST.name, ScreenRoute.SCREEN2.name, ScreenRoute.SCREEN3.name, ScreenRoute.REFACTOR.name -> TopNavigationMain(navController = navController)
+                ScreenRoute.SCREENREFACTORING.name + "/{itemId}" -> TopNavigationRefactoring(navController = navController)
+                else -> TopNavigationView(navController = navController, viewModel = dotsViewModel)
+            }
         },
         bottomBar = {
             if (currentRoute != ScreenRoute.SCREENREGAUT.name &&
@@ -83,12 +83,6 @@ fun MainNavigationScreen(
             composable(ScreenRoute.AUTHORIZATION.name) {
                 AuthorizationScreen(viewModel = authorizationViewModel)
             }
-//            composable(ScreenRoute.SCREENVIEW.name) {
-//                screenView(
-//                    viewModel = dotsViewModel,
-//                    navController = navController
-//                    )
-//            }
             composable(ScreenRoute.SCREENVIEW.name + "/{itemId}") { backStackEntry ->
                 val dotsId = backStackEntry.arguments?.getString("itemId")
                 screenView(
@@ -96,6 +90,20 @@ fun MainNavigationScreen(
                     navController = navController,
                     dotsId = dotsId?.toIntOrNull() ?: 0
                 )
+            }
+
+            composable(ScreenRoute.SCREENREFACTORING.name + "/{itemId}") { backStackEntry ->
+                val dotsId = backStackEntry.arguments?.getString("itemId")
+                screenRefactoring(
+                    viewModel = dotsViewModel,
+                    navController = navController,
+                    dotsId = dotsId?.toIntOrNull() ?: 0
+                )
+            }
+
+            composable(ScreenRoute.REFACTOR.name + "/{itemId}") { backStackEntry ->
+                val dotsId = backStackEntry.arguments?.getString("itemId")
+                refactoring(viewModel = dotsViewModel, navController = navController, dotsId = dotsId?.toIntOrNull() ?: 0)
             }
 
         }

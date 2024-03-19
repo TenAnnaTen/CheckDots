@@ -28,14 +28,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 @Composable
-fun DotsItem(dots: Dots, navController: NavController, itemId: Int) {
+fun DotsItem2(dots: Dots, navController: NavController, itemId: Int) {
     Card (
         modifier = Modifier
             .padding(10.dp)
     ){
         Row (
             Modifier.clickable{
-                navController.navigate("${ScreenRoute.SCREENREFACTORING.name}/${itemId}")
+                navController.navigate("${ScreenRoute.SCREENVIEW.name}/${itemId}")
                 Log.d("MyLog", itemId.toString())
             }
         ) {

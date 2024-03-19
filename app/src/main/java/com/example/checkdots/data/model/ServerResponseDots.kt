@@ -1,5 +1,7 @@
 package com.example.checkdots.data.model
 
+import android.media.Rating
+
 data class ServerResponseDots(
     val claimId: Int,
     val heading: String,

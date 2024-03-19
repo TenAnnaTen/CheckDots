@@ -9,11 +9,6 @@ class AccountStorage: KoinComponent {
 
     private val context: Application by inject()
 
-//    fun isUserLoggedIn(): Boolean {
-//        val userId = getUserId(context)
-//        return !userId.isNullOrEmpty()
-//    }
-
     fun saveUserId(userId: Int) {
         val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()

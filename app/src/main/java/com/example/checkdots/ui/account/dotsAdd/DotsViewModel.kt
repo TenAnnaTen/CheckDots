@@ -108,4 +108,32 @@ class DotsViewModel(
             }
         }
     }
+
+    fun delDots(dotsId: Int){
+        viewModelScope.launch {
+            dotsRepository.delDot(dotsId)
+            navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+        }
+    }
+    fun likeDots(dotsId: Int){
+        viewModelScope.launch {
+            dotsRepository.likeDot(dotsId)
+        }
+    }
+    fun dislikeDots(dotsId: Int){
+        viewModelScope.launch {
+            dotsRepository.dislikeDot(dotsId)
+        }
+    }
+
+    fun refactorDots(dots: Dots, dotsId: Int){
+        viewModelScope.launch {
+            try {
+                dotsRepository.refactorDot(dots, dotsId)
+                navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+            } catch (e: Exception) {
+                _sharedFlow.emit("Ошибка сети")
+            }
+        }
+    }
 }

@@ -13,38 +13,39 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.TransitEnterexit
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.example.checkdots.R
 import com.example.checkdots.data.storage.AccountStorage
+import com.example.checkdots.ui.account.dotsAdd.DotsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopNavigationMain(navController: NavController) {
     val openAlertDialog = remember { mutableStateOf(false) }
     val accountStorage = AccountStorage()
-    TopAppBar(
-        title = {
-            Text(text = stringResource(id = R.string.app_name))
-        },
-        navigationIcon = {
-            IconButton(onClick = { openAlertDialog.value = true
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Go out"
-                )
-            }
+    TopAppBar(title = {
+        Text(text = stringResource(id = R.string.app_name))
+    }, navigationIcon = {
+        IconButton(onClick = {
+            openAlertDialog.value = true
+        }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack, contentDescription = "Go out"
+            )
         }
-    )
+    })
 
-    if (openAlertDialog.value){
-        AlertDialogExample(
-            onDismissRequest = { openAlertDialog.value = false },
+    if (openAlertDialog.value) {
+        AlertDialogExample(onDismissRequest = { openAlertDialog.value = false },
             onConfirmation = {
                 openAlertDialog.value = false
                 accountStorage.saveUserId(0)
                 navController.navigate(ScreenRoute.SCREENREGAUT.name)
-                             },
+            },
             dialogTitle = "Выход из приложения",
             dialogText = "Вы действительно хотите выйти?",
             icon = Icons.Default.TransitEnterexit
@@ -54,21 +55,55 @@ fun TopNavigationMain(navController: NavController) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopNavigationView(navController: NavController) {
-    val accountStorage = AccountStorage()
-    TopAppBar(
-        title = {
-            Text(text = stringResource(id = R.string.app_name))
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                navController.navigate(ScreenRoute.SCREEN3.name)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Go out"
-                )
-            }
+fun TopNavigationRefactoring(navController: NavController) {
+    TopAppBar(title = {
+        Text(text = stringResource(id = R.string.app_name))
+    }, navigationIcon = {
+        IconButton(onClick = {
+            navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+        }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack, contentDescription = "Go out"
+            )
         }
-    )
+    })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopNavigationView(navController: NavController, viewModel: DotsViewModel) {
+
+    var isFavorite by remember { mutableStateOf(false) } // Состояние для отслеживания заполненности иконки "Like"
+    var isLiked by remember { mutableStateOf(false) } // Состояние для отслеживания действия "Like"
+
+    val accountStorage = AccountStorage()
+
+    TopAppBar(title = {
+        Text(text = stringResource(id = R.string.app_name))
+    }, navigationIcon = {
+        IconButton(onClick = {
+            navController.navigate(ScreenRoute.SCREEN3.name)
+        }) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack, contentDescription = "Go out"
+            )
+        }
+    }, actions = {
+        IconButton(onClick = {
+            isFavorite = !isFavorite
+            if (isFavorite) {
+
+                viewModel.likeDots(accountStorage.getDotsId())
+                isLiked = true
+            } else {
+                viewModel.dislikeDots(accountStorage.getDotsId())
+                isLiked = false
+            }
+        }) {
+            val icon = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder
+            Icon(
+                imageVector = icon, contentDescription = if (isLiked) "Unlike" else "Like"
+            )
+        }
+    })
 }

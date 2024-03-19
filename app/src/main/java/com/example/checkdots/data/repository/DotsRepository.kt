@@ -29,4 +29,18 @@ class DotsRepository {
         return RetrofitInstance.dotsService.getDotsWithId(dotsId)
     }
 
+    suspend fun delDot(dotsId: Int) {
+        return RetrofitInstance.dotsService.delDots(dotsId)
+    }
+
+    suspend fun likeDot(dotsId: Int){
+        return RetrofitInstance.dotsService.like(dotsId)
+    }
+    suspend fun dislikeDot(dotsId: Int){
+        return RetrofitInstance.dotsService.dislike(dotsId)
+    }
+    suspend fun refactorDot(dots: Dots, dotsId: Int){
+        return RetrofitInstance.dotsService.refactorDots(dots, dotsId)
+    }
+
 }

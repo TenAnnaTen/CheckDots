@@ -6,8 +6,11 @@ import com.example.checkdots.data.model.ServerResponseDots
 import com.example.checkdots.data.model.User
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface DotsService {
@@ -23,4 +26,16 @@ interface DotsService {
 
     @GET("claim/get/{id}")
     suspend fun getDotsWithId(@Path("id") id: Int): Response<ServerResponseDots>
+
+    @DELETE("claim/delete/{id}")
+    suspend fun delDots(@Path("id") id: Int)
+
+    @PATCH("claim/uprating/{id}")
+    suspend fun like(@Path("id") id: Int)
+
+    @PATCH("claim/downrating/{id}")
+    suspend fun dislike(@Path("id") id: Int)
+
+    @PUT("claim/update/{id}")
+    suspend fun refactorDots(@Body request: Dots, @Path("id") id: Int)
 }
