@@ -1,5 +1,6 @@
 package com.example.checkdots.ui.account.registration
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -42,6 +43,7 @@ class RegistrationViewModel(
                     _sharedFlow.emit("Введите другое имя")
                 }
             } catch (e: Exception) {
+                Log.d("MyLog", e.toString())
                 _sharedFlow.emit("Ошибка сети")
             }
         }

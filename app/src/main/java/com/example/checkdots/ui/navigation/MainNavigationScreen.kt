@@ -43,7 +43,7 @@ fun MainNavigationScreen(
             when (currentRoute) {
                 ScreenRoute.SCREENMAINLIST.name, ScreenRoute.SCREEN2.name, ScreenRoute.SCREEN3.name -> TopNavigationMain(navController = navController)
                 ScreenRoute.SCREENREFACTORING.name, ScreenRoute.REFACTOR.name + "/{itemId}" -> TopNavigationRefactoring(navController = navController)
-                else -> TopNavigationView(navController = navController, viewModel = dotsViewModel)
+                ScreenRoute.SCREENVIEW.name + "/{itemId}" -> TopNavigationView(navController = navController, viewModel = dotsViewModel)
             }
         },
         bottomBar = {
