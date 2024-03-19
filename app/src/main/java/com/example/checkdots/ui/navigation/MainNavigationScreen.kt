@@ -41,8 +41,8 @@ fun MainNavigationScreen(
     Scaffold(
         topBar = {
             when (currentRoute) {
-                ScreenRoute.SCREENMAINLIST.name, ScreenRoute.SCREEN2.name, ScreenRoute.SCREEN3.name, ScreenRoute.REFACTOR.name -> TopNavigationMain(navController = navController)
-                ScreenRoute.SCREENREFACTORING.name + "/{itemId}" -> TopNavigationRefactoring(navController = navController)
+                ScreenRoute.SCREENMAINLIST.name, ScreenRoute.SCREEN2.name, ScreenRoute.SCREEN3.name -> TopNavigationMain(navController = navController)
+                ScreenRoute.SCREENREFACTORING.name, ScreenRoute.REFACTOR.name + "/{itemId}" -> TopNavigationRefactoring(navController = navController)
                 else -> TopNavigationView(navController = navController, viewModel = dotsViewModel)
             }
         },
@@ -87,7 +87,6 @@ fun MainNavigationScreen(
                 val dotsId = backStackEntry.arguments?.getString("itemId")
                 screenView(
                     viewModel = dotsViewModel,
-                    navController = navController,
                     dotsId = dotsId?.toIntOrNull() ?: 0
                 )
             }

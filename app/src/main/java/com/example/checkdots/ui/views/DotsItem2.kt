@@ -2,6 +2,7 @@ package com.example.checkdots.ui.views
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -36,27 +39,27 @@ fun DotsItem2(dots: Dots, navController: NavController, itemId: Int) {
         Row (
             Modifier.clickable{
                 navController.navigate("${ScreenRoute.SCREENVIEW.name}/${itemId}")
-                Log.d("MyLog", itemId.toString())
             }
+                .background(color = colorResource(id = R.color.main_yellow))
         ) {
-            DotsImage(dots)
+            DotsImage()
             Column (
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically)
             ) {
-                Text(text = dots.claimId.toString(), style = typography.headlineLarge)
-                Text(text = dots.description, style = typography.bodyMedium)
+                Text(text = dots.heading, style = typography.headlineLarge,  color = Color.Black)
+                Text(text = dots.description, style = typography.bodyMedium,  color = Color.DarkGray)
             }
         }
     }
 }
 
 @Composable
-private fun DotsImage(dots: Dots){
+private fun DotsImage(){
     Image(
-        painter = painterResource(id = R.drawable.logo),
+        painter = painterResource(id = R.drawable.flag),
         contentDescription = null,
         modifier = Modifier
             .padding(8.dp)

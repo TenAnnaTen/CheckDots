@@ -11,4 +11,8 @@
     <string name="location">Адрес метки</string>
     <string name="btn_save">Сохранить</string>
     <string name="error_regex">г. Город, ул. Улица (пер. Переулок, пр. Проспект), д. Ближайший номер дома</string>
+    <string name="refactor">Редактировать</string>
+    <string name="del">Удалить</string>
+    <string name="del_question">Вы действительно хотите удалить?</string>
+    <string name="exit">Выход</string>
 </resources>

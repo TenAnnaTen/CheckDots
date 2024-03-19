@@ -15,6 +15,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.SubdirectoryArrowLeft
 import androidx.compose.material.icons.filled.TransitEnterexit
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -28,13 +29,13 @@ fun TopNavigationMain(navController: NavController) {
     val openAlertDialog = remember { mutableStateOf(false) }
     val accountStorage = AccountStorage()
     TopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
+        Text(text = stringResource(id = R.string.exit))
     }, navigationIcon = {
         IconButton(onClick = {
             openAlertDialog.value = true
         }) {
             Icon(
-                imageVector = Icons.Default.ArrowBack, contentDescription = "Go out"
+                imageVector = Icons.Default.SubdirectoryArrowLeft, contentDescription = "Go out"
             )
         }
     })
@@ -57,7 +58,7 @@ fun TopNavigationMain(navController: NavController) {
 @Composable
 fun TopNavigationRefactoring(navController: NavController) {
     TopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
+        Text(text = stringResource(id = R.string.exit))
     }, navigationIcon = {
         IconButton(onClick = {
             navController.navigate(ScreenRoute.SCREENMAINLIST.name)
@@ -79,7 +80,7 @@ fun TopNavigationView(navController: NavController, viewModel: DotsViewModel) {
     val accountStorage = AccountStorage()
 
     TopAppBar(title = {
-        Text(text = stringResource(id = R.string.app_name))
+        Text(text = stringResource(id = R.string.exit))
     }, navigationIcon = {
         IconButton(onClick = {
             navController.navigate(ScreenRoute.SCREEN3.name)
