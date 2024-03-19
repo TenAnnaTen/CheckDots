@@ -83,16 +83,18 @@ fun MainNavigationScreen(
             composable(ScreenRoute.AUTHORIZATION.name) {
                 AuthorizationScreen(viewModel = authorizationViewModel)
             }
-            composable(ScreenRoute.SCREENVIEW.name) {
+//            composable(ScreenRoute.SCREENVIEW.name) {
+//                screenView(
+//                    viewModel = dotsViewModel,
+//                    navController = navController
+//                    )
+//            }
+            composable(ScreenRoute.SCREENVIEW.name + "/{itemId}") { backStackEntry ->
+                val dotsId = backStackEntry.arguments?.getString("itemId")
                 screenView(
                     viewModel = dotsViewModel,
-                    navController = navController
-                    )
-            }
-            composable(ScreenRoute.SCREENVIEW.name + "/{dotsId}") { backStackEntry ->
-                screenView(
-                    viewModel = dotsViewModel,
-                    navController = navController
+                    navController = navController,
+                    dotsId = dotsId?.toIntOrNull() ?: 0
                 )
             }
 

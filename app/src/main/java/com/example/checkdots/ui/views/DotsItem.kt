@@ -28,15 +28,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
 @Composable
-fun DotsItem(dots: Dots, navController: NavController) {
+fun DotsItem(dots: Dots, navController: NavController, itemId: Int) {
     Card (
         modifier = Modifier
             .padding(10.dp)
     ){
         Row (
             Modifier.clickable{
-                navController.navigate(ScreenRoute.SCREENVIEW.name + "/${dots.id}")
-                Log.d("MyLog", dots.id.toString())
+                navController.navigate("${ScreenRoute.SCREENVIEW.name}/${itemId}")
+                Log.d("MyLog", itemId.toString())
             }
         ) {
             DotsImage(dots)
@@ -46,7 +46,7 @@ fun DotsItem(dots: Dots, navController: NavController) {
                     .fillMaxWidth()
                     .align(Alignment.CenterVertically)
             ) {
-                Text(text = dots.heading, style = typography.headlineLarge)
+                Text(text = dots.claimId.toString(), style = typography.headlineLarge)
                 Text(text = dots.description, style = typography.bodyMedium)
             }
         }

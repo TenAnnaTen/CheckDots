@@ -41,10 +41,18 @@ class DotsViewModel(
             try {
                 val response = dotsRepository.registerDots(dots)
                 if (response.isSuccessful) {
+
                     val dotsId = response.body()?.claimId
-                    navController.navigate(ScreenRoute.SCREENMAINLIST.name)
+                    Log.d("MyLog", dotsId.toString())
+
+                    if (dotsId != null && dotsId != 0){
+                        Log.d("MyLog", "+")
+                        accountStorage.saveDotsId(dotsId)
+                    }
+
                     _state.update { it.copy(dotsId = dotsId) }
-                    if (dotsId != null) accountStorage.saveDotsId(dotsId)
+
+                    navController.navigate(ScreenRoute.SCREENMAINLIST.name)
                 } else {
                     _sharedFlow.emit("Ошибка добавления")
                 }
@@ -82,6 +90,18 @@ class DotsViewModel(
         viewModelScope.launch {
             try {
                 val response = dotsRepository.getDotWithId(dotsId)
+                if (response.isSuccessful) {
+                    val dotsHeading = response.body()?.heading
+                    val dotsDescription = response.body()?.description
+                    val dotsAddress = response.body()?.address
+                    _state.update { it.copy(dotsHeading = dotsHeading) }
+                    _state.update { it.copy(dotsDescription = dotsDescription) }
+                    _state.update { it.copy(dotsAddress = dotsAddress) }
+                    if (dotsHeading != null) accountStorage.saveDotsHeading(dotsHeading)
+                    if (dotsDescription != null) accountStorage.saveDotsDescription(dotsDescription)
+                    if (dotsAddress != null) accountStorage.saveDotsAddress(dotsAddress)
+
+                }
                 Log.d("MyLog", dotsId.toString())
             } catch (e: Exception) {
                 _sharedFlow.emit("Ошибка сети")

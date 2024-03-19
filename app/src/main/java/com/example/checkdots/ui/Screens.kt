@@ -46,7 +46,7 @@ import java.util.concurrent.ExecutorService
 
 @Composable
 fun ScreenMainList(viewModel: DotsViewModel, navController: NavHostController) {
-    ListWithDots(dotsList = viewModel.dotsListResponse, navController)
+    ListWithDots(dotsList = viewModel.dotsListResponse, navController = navController)
     viewModel.getDotsList()
 }
 
@@ -153,13 +153,14 @@ fun Screen2(
                 if (Regexp(location)){
                     viewModel.addDots(
                         Dots(
-                            id = accountStorage.getDotsId(),
+                            claimId = accountStorage.getDotsId(),
                             heading = label,
                             description = text,
                             address = location,
                             path_image = ""
                         )
                     )
+                    Log.d("MyLog", accountStorage.getDotsId().toString() + "  p")
                     navController.navigate(ScreenRoute.SCREENMAINLIST.name)
                 } else Toast.makeText(context, "Местоположение введено неверно", Toast.LENGTH_SHORT).show()
 
@@ -178,22 +179,21 @@ fun Screen3(viewModel: DotsViewModel, navController: NavHostController) {
 }
 
 @Composable
-fun screenView(viewModel: DotsViewModel, navController: NavHostController){
+fun screenView(viewModel: DotsViewModel, navController: NavHostController, dotsId: Int){
 
-    val dotsId = navController.currentBackStackEntry?.arguments?.getString("dots_id")
-
-    viewModel.getDotsWithId(dotsId?.toInt() ?: 0)
+    val accountStorage = AccountStorage()
+    viewModel.getDotsWithId(dotsId)
 
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(25.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-//        Text(text = "Заголовок: ${dots.}", fontSize = 25.sp)
-//        SpaceBetween()
-//        Text(text = "Описание: ${}", fontSize = 25.sp)
-//        SpaceBetween()
-//        Text(text = "Местоположение: ${}", fontSize = 25.sp)
+        Text(text = "Заголовок: ${accountStorage.getDotsHeading()}", fontSize = 25.sp)
+        SpaceBetween()
+        Text(text = "Описание: ${accountStorage.getDotsDescription()}", fontSize = 25.sp)
+        SpaceBetween()
+        Text(text = "Местоположение: ${accountStorage.getDotsAddress()}", fontSize = 25.sp)
     }
 }
 

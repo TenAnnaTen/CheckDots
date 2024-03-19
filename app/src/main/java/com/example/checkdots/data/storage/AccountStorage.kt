@@ -37,4 +37,39 @@ class AccountStorage: KoinComponent {
         val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("dots_id", 0)
     }
+
+    fun saveDotsHeading(dotsHeading: String) {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("dots_heading", dotsHeading)
+        editor.apply()
+    }
+
+    fun getDotsHeading(): String? {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("dots_heading", "")
+    }
+    fun saveDotsDescription(dotsDescription: String) {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("dots_description", dotsDescription)
+        editor.apply()
+    }
+
+    fun getDotsDescription(): String? {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("dots_description", "")
+    }
+
+    fun saveDotsAddress(dotsAddress: String) {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("dots_address", dotsAddress)
+        editor.apply()
+    }
+
+    fun getDotsAddress(): String? {
+        val sharedPreferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("dots_address", "")
+    }
 }

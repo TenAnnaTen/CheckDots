@@ -12,14 +12,14 @@ import androidx.navigation.NavHostController
 import com.example.checkdots.data.model.Dots
 
 @Composable
-fun ListWithDots(dotsList: List<Dots>, navController: NavHostController) {
+fun ListWithDots(dotsList: List<Dots>, navController: NavController) {
     LazyColumn(
         modifier = Modifier
             .padding(bottom = 80.dp, top = 55.dp),
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
     ){
         itemsIndexed(items = dotsList){index, item ->  
-            DotsItem(dots = item, navController)
+            DotsItem(dots = item, navController, item.claimId)
         }
     }
 }
